@@ -204,6 +204,7 @@ class IbGateway(VtGateway):
         tick.exchange = subscribeReq.exchange
         tick.vtSymbol = '.'.join([tick.symbol, tick.exchange])
         tick.gatewayName = self.gatewayName
+        tick.currency = subscribeReq.currency
         tick.__setattr__('m_secType', productClassMap.get(subscribeReq.productClass, ''))
         self.tickDict[self.tickerId] = tick
     
@@ -469,7 +470,8 @@ class IbWrapper(EWrapper):
 
         contract.vtSymbol = '.'.join([contract.symbol, contract.exchange])
         contract.name = contractDetails.m_summary.m_localSymbol.decode('UTF-8')
-        
+        contract.currency = contractDetails.m_summary.m_currency
+
         # 合约类型
         contract.productClass = productClassMapReverse.get(contractDetails.m_summary.m_secType, 
                                                            PRODUCT_UNKNOWN)

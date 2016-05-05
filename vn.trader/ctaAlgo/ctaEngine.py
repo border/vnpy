@@ -319,6 +319,8 @@ class CtaEngine(object):
                 req = VtSubscribeReq()
                 req.symbol = contract.symbol
                 req.exchange = contract.exchange
+                req.currency = contract.currency
+                req.productClass = contract.productClass
                 self.mainEngine.subscribe(req, contract.gatewayName)
             else:
                 self.writeCtaLog(u'%s的交易合约%s无法找到' %(name, strategy.vtSymbol))
