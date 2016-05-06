@@ -303,6 +303,11 @@ class IbWrapper(EWrapper):
                 dt_obj = datetime.now()
                 tick.time = dt_obj.strftime('%H:%M:%S.%f')
                 tick.date = dt_obj.strftime('%Y%m%d')
+                # IB 外汇没有 lastPrice 采用 ask和bid的中间值
+                if tick.askPrice1 and tick.bidPrice1:
+                    tick.lastPrice = (tick.askPrice1 + tick.bidPrice1) / 2
+                else:
+                    return
             
             # 行情数据更新
             newtick = copy(tick)
@@ -323,7 +328,11 @@ class IbWrapper(EWrapper):
                 dt_obj = datetime.now()
                 tick.time = dt_obj.strftime('%H:%M:%S.%f')
                 tick.date = dt_obj.strftime('%Y%m%d')
-                
+                # IB 外汇没有 lastPrice 采用 ask和bid的中间值
+                if tick.askPrice1 and tick.bidPrice1:
+                    tick.lastPrice = (tick.askPrice1 + tick.bidPrice1) / 2
+                else:
+                    return
             # 行情数据更新
             newtick = copy(tick)
             self.gateway.onTick(newtick)      

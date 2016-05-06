@@ -76,9 +76,9 @@ class DrEngine(object):
                 l = setting['bar']
                 
                 for symbol, gatewayName, exchange, currency, productClass in l:
-                    bar = DrBarData()
+                    drBar = DrBarData()
                     vtSymbol = '.'.join([symbol, exchange])
-                    self.tickDict[vtSymbol] = drTick
+                    self.barDict[vtSymbol] = drBar
                     
                     req = VtSubscribeReq()
                     req.symbol = symbol
@@ -101,6 +101,9 @@ class DrEngine(object):
         """处理行情推送"""
         tick = event.dict_['data']
         vtSymbol = tick.vtSymbol
+
+        if not tick.date or not tick.time:
+            return
 
         # 转化Tick格式
         drTick = DrTickData()
@@ -125,7 +128,7 @@ class DrEngine(object):
         # 更新分钟线数据
         if vtSymbol in self.barDict:
             bar = self.barDict[vtSymbol]
-            
+
             # 如果第一个TICK或者新的一分钟
             if not bar.datetime or bar.datetime.minute != drTick.datetime.minute:    
                 if bar.vtSymbol:
