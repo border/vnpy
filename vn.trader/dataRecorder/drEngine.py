@@ -70,7 +70,6 @@ class DrEngine(object):
                     req.exchange = exchange
                     req.currency = currency
                     req.productClass = productClass
-                    print vars(req)
                     self.mainEngine.subscribe(req, gatewayName)
                     
             if 'bar' in setting:
