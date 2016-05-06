@@ -22,7 +22,7 @@ class MainWindow(QtGui.QMainWindow):
         self.widgetDict = {}    # 用来保存子窗口的字典
         
         self.initUi()
-        self.loadWindowSettings()
+        #self.loadWindowSettings()
         
     #----------------------------------------------------------------------
     def initUi(self):
