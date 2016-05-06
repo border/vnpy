@@ -175,7 +175,10 @@ class IbGateway(VtGateway):
         """订阅行情"""
         # 订阅行情
         self.tickerId += 1
-        
+
+        if not self.connected:
+            self.connect()
+
         contract = Contract()
         contract.m_symbol = str(subscribeReq.symbol)
         contract.m_exchange = exchangeMap.get(subscribeReq.exchange, '')

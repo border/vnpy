@@ -3,28 +3,28 @@
 
     "tick":
     [
-        ["IF1605", "SGIT"],
-        ["IF1606", "SGIT"],
-        ["IH1606", "SGIT"],
-        ["IH1606", "SGIT"],
-        ["IC1606", "SGIT"],
-        ["IC1606", "SGIT"]
-    ],
+        ["ru1609", "CTP", "SHFE", "CNY", "FUT"],
+        ["ni1609", "CTP", "SHFE", "CNY", "FUT"],
+        ["pp1609", "CTP", "DCE", "CNY", "FUT"],
+        ["IF1605", "CTP", "CFFEX", "CNY", "FUT"],
+        ["EUR", "IB", "IDEALPRO", "USD", "外汇"]
+     ],
 
     "bar":
     [
-        ["IF1605", "SGIT"],
-        ["IF1606", "SGIT"],
-        ["IH1606", "SGIT"],
-        ["IH1606", "SGIT"],
-        ["IC1606", "SGIT"],
-        ["IC1606", "SGIT"]
-    ],
+        ["ru1609", "CTP", "SHFE", "CNY", "FUT"],
+        ["ni1609", "CTP", "SHFE", "CNY", "FUT"],
+        ["pp1609", "CTP", "DCE", "CNY", "FUT"],
+        ["IF1605", "CTP", "CFFEX", "CNY", "FUT"],
+        ["EUR", "IB", "IDEALPRO", "USD", "外汇"]
+     ],
 
     "active":
     {
-    	"IF0000": "IF1605",
-        "IH0000": "IH1605",
-        "IC0000": "IC1605"
+    	"RU0000": "ru1609",
+        "NI0000": "ni1609",
+        "PP0000": "pp1609",
+        "IF0000": "IF1605",
+        "EUR": "EUR"
     }
 }

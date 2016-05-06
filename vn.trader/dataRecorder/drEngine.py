@@ -60,23 +60,32 @@ class DrEngine(object):
             if 'tick' in setting:
                 l = setting['tick']
                 
-                for symbol, gatewayName in l:
+                for symbol, gatewayName, exchange, currency, productClass in l:
                     drTick = DrTickData()           # 该tick实例可以用于缓存部分数据（目前未使用）
-                    self.tickDict[symbol] = drTick
+                    vtSymbol = '.'.join([symbol, exchange])
+                    self.tickDict[vtSymbol] = drTick
                     
                     req = VtSubscribeReq()
                     req.symbol = symbol
+                    req.exchange = exchange
+                    req.currency = currency
+                    req.productClass = productClass
+                    print vars(req)
                     self.mainEngine.subscribe(req, gatewayName)
                     
             if 'bar' in setting:
                 l = setting['bar']
                 
-                for symbol, gatewayName in l:
+                for symbol, gatewayName, exchange, currency, productClass in l:
                     bar = DrBarData()
-                    self.barDict[symbol] = bar
+                    vtSymbol = '.'.join([symbol, exchange])
+                    self.tickDict[vtSymbol] = drTick
                     
                     req = VtSubscribeReq()
                     req.symbol = symbol
+                    req.exchange = exchange
+                    req.currency = currency
+                    req.productClass = productClass
                     self.mainEngine.subscribe(req, gatewayName)      
                     
             if 'active' in setting:

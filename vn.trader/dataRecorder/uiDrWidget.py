@@ -124,7 +124,7 @@ class DrEngineManager(QtGui.QWidget):
             if 'tick' in setting:
                 l = setting['tick']
     
-                for symbol, gatewayName in l:
+                for symbol, gatewayName, exchange, currency, productClass in l:
                     self.tickTable.insertRow(0)
                     self.tickTable.setItem(0, 0, TableCell(symbol))
                     self.tickTable.setItem(0, 1, TableCell(gatewayName))
@@ -132,7 +132,7 @@ class DrEngineManager(QtGui.QWidget):
             if 'bar' in setting:
                 l = setting['bar']
     
-                for symbol, gatewayName in l:
+                for symbol, gatewayName, exchange, currency, productClass in l:
                     self.barTable.insertRow(0)
                     self.barTable.setItem(0, 0, TableCell(symbol))
                     self.barTable.setItem(0, 1, TableCell(gatewayName)) 
