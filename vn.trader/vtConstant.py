@@ -63,6 +63,7 @@ EXCHANGE_UNKNOWN = 'UNKNOWN'# 未知交易所
 EXCHANGE_NONE = ''          # 空交易所
 EXCHANGE_HKEX = 'HKEX'      # 港交所
 
+EXCHANGE_SGX = 'SGX'       # 新加坡交易所A50
 EXCHANGE_SMART = 'SMART'       # IB智能路由（股票、期权）
 EXCHANGE_NYMEX = 'NYMEX'       # IB 期货
 EXCHANGE_GLOBEX = 'GLOBEX'     # CME电子交易平台
@@ -73,5 +74,12 @@ EXCHANGE_OANDA = 'OANDA'       # OANDA外汇做市商
 # 货币类型
 CURRENCY_USD = 'USD'            # 美元
 CURRENCY_CNY = 'CNY'            # 人民币
+CURRENCY_EUR = 'EUR'            # 欧元
+CURRENCY_GBP = 'GBP'            # 英镑
+CURRENCY_AUD = 'AUD'            # 澳元
+CURRENCY_CAD = 'CAD'            # 加元
+CURRENCY_JPY = 'JPY'            # 日元
+CURRENCY_CHF = 'CHF'            # 瑞士法郎
+CURRENCY_NZD = 'NZD'            # 新西兰元
 CURRENCY_UNKNOWN = 'UNKNOWN'    # 未知货币
 CURRENCY_NONE = ''              # 空货币

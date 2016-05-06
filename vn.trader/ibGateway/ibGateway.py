@@ -49,6 +49,7 @@ exchangeMap = {}
 exchangeMap[EXCHANGE_SMART] = 'SMART'
 exchangeMap[EXCHANGE_NYMEX] = 'NYMEX'
 exchangeMap[EXCHANGE_GLOBEX] = 'GLOBEX'
+exchangeMap[EXCHANGE_SGX] = 'SGX'       # 新加坡交易所A50
 exchangeMap[EXCHANGE_IDEALPRO] = 'IDEALPRO'
 exchangeMapReverse = {v:k for k,v in exchangeMap.items()}
 
@@ -81,6 +82,13 @@ optionTypeMap = {v:k for k,v in optionTypeMap.items()}
 currencyMap = {}
 currencyMap[CURRENCY_USD] = 'USD'
 currencyMap[CURRENCY_CNY] = 'CNY'
+currencyMap[CURRENCY_GBP] = 'GBP'
+currencyMap[CURRENCY_EUR] = 'EUR'
+currencyMap[CURRENCY_AUD] = 'AUD'
+currencyMap[CURRENCY_CAD] = 'CAD'
+currencyMap[CURRENCY_CHF] = 'CHF'
+currencyMap[CURRENCY_JPY] = 'JPY'
+currencyMap[CURRENCY_NZD] = 'NZD'
 currencyMap = {v:k for k,v in currencyMap.items()}
 
 # Tick数据的Field和名称映射
