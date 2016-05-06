@@ -647,7 +647,14 @@ class TradingWidget(QtGui.QFrame):
     
     currencyList = [CURRENCY_NONE,
                     CURRENCY_CNY,
-                    CURRENCY_USD]
+                    CURRENCY_USD,
+                    CURRENCY_EUR,
+                    CURRENCY_GBP,
+                    CURRENCY_AUD,
+                    CURRENCY_CAD,
+                    CURRENCY_JPY,
+                    CURRENCY_CHF,
+                    CURRENCY_NZD]
     
     productClassList = [PRODUCT_NONE,
                         PRODUCT_EQUITY,
