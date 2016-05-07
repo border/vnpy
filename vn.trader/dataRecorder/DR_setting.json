@@ -1,30 +1,15 @@
 {
-    "working": false,
-
-    "tick":
-    [
-        ["ru1609", "CTP", "SHFE", "CNY", "FUT"],
-        ["ni1609", "CTP", "SHFE", "CNY", "FUT"],
-        ["pp1609", "CTP", "DCE", "CNY", "FUT"],
-        ["IF1605", "CTP", "CFFEX", "CNY", "FUT"],
-        ["EUR", "IB", "IDEALPRO", "USD", "外汇"]
-     ],
+    "working": true,
 
     "bar":
     [
-        ["ru1609", "CTP", "SHFE", "CNY", "FUT"],
-        ["ni1609", "CTP", "SHFE", "CNY", "FUT"],
-        ["pp1609", "CTP", "DCE", "CNY", "FUT"],
-        ["IF1605", "CTP", "CFFEX", "CNY", "FUT"],
-        ["EUR", "IB", "IDEALPRO", "USD", "外汇"]
+        ["EUR", "IB", "IDEALPRO", "USD", "外汇"],
+        ["SPY", "IB", "SMART", "USD", "股票"]
      ],
 
     "active":
     {
-    	"RU0000": "ru1609",
-        "NI0000": "ni1609",
-        "PP0000": "pp1609",
-        "IF0000": "IF1605",
-        "EUR": "EUR"
+        "EUR": "EUR",
+        "SPY": "SPY"
     }
 }

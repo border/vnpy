@@ -37,7 +37,10 @@ def main():
     mainEngine = MainEngine()
     mainWindow = MainWindow(mainEngine, mainEngine.eventEngine)
     mainWindow.showMaximized()
-    
+
+    # 启动数据库连接
+    mainEngine.dbConnect()
+
     # 在主线程中启动Qt事件循环
     sys.exit(app.exec_())
     

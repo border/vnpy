@@ -177,7 +177,10 @@ class IbGateway(VtGateway):
         
         # 请求账户数据主推更新
         self.connection.reqAccountUpdates(True, '')
-    
+
+        self.connection.reqPositions()
+
+
     #----------------------------------------------------------------------
     def subscribe(self, subscribeReq):
         """订阅行情"""
