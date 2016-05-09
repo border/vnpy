@@ -1,13 +1,6 @@
 {
     "working": true,
 
-    "tick":
-    [
-        ["SPY", "IB", "SMART", "USD", "股票"],
-        ["CLM6", "IB", "NYMEX", "USD", "期货"],
-        ["EUR.USD", "IB", "IDEALPRO", "USD", "外汇"]
-     ],
-
     "bar":
     [
         ["SPY", "IB", "SMART", "USD", "股票"],

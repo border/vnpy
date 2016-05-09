@@ -337,9 +337,6 @@ class IbWrapper(EWrapper):
     #----------------------------------------------------------------------
     def tickSize(self, tickerId, field, size):
         """行情推送（量相关）"""
-        pass
-        """
-        # 太耗资源了, 也没有必要, 暂时注释掉
         if field in tickFieldMap:
             tick = self.tickDict[tickerId]
             key = tickFieldMap[field]
@@ -356,11 +353,13 @@ class IbWrapper(EWrapper):
                 else:
                     return
             # 行情数据更新
+            """
+            # 太耗资源, 暂时注释掉
             newtick = copy(tick)
-            self.gateway.onTick(newtick)      
+            self.gateway.onTick(newtick)
+            """
         else:
             print field
-        """
 
     #----------------------------------------------------------------------
     def tickOptionComputation(self, tickerId, field, impliedVol, delta, optPrice, pvDividend, gamma, vega, theta, undPrice):
