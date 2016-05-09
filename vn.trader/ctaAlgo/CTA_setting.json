@@ -3,5 +3,11 @@
         "name": "double ema",
         "className": "DoubleEmaDemo",
         "vtSymbol": "IF1602"
+    },
+    {
+        "name": "double ema2",
+        "className": "DoubleEmaDemo",
+        "vtSymbol": "EUR.USD",
+        "exchange": "IDEALPRO"
     }
 ]

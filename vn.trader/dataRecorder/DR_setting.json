@@ -7,7 +7,8 @@
         ["ni1609", "CTP", "SHFE", "CNY", "FUT"],
         ["pp1609", "CTP", "DCE", "CNY", "FUT"],
         ["IF1605", "CTP", "CFFEX", "CNY", "FUT"],
-        ["EUR", "IB", "IDEALPRO", "USD", "外汇"]
+        ["CLM6", "IB", "NYMEX", "USD", "期货"],
+        ["EUR.USD", "IB", "IDEALPRO", "USD", "外汇"]
      ],
 
     "bar":
@@ -16,7 +17,8 @@
         ["ni1609", "CTP", "SHFE", "CNY", "FUT"],
         ["pp1609", "CTP", "DCE", "CNY", "FUT"],
         ["IF1605", "CTP", "CFFEX", "CNY", "FUT"],
-        ["EUR", "IB", "IDEALPRO", "USD", "外汇"]
+        ["CLM6", "IB", "NYMEX", "USD", "期货"],
+        ["EUR.USD", "IB", "IDEALPRO", "USD", "外汇"]
      ],
 
     "active":
@@ -25,6 +27,7 @@
         "NI0000": "ni1609",
         "PP0000": "pp1609",
         "IF0000": "IF1605",
-        "EUR": "EUR"
+        "CL00"  : "CLM6",
+        "EUR.USD": "EUR.USD"
     }
 }
