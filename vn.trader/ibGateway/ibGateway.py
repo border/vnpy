@@ -191,22 +191,23 @@ class IbGateway(VtGateway):
             self.connect()
 
         contract = Contract()
-        contract.m_symbol = str(subscribeReq.symbol)
+
         contract.m_exchange = exchangeMap.get(subscribeReq.exchange, '')
         contract.m_secType = productClassMap.get(subscribeReq.productClass, '')
         contract.m_currency = currencyMap.get(subscribeReq.currency, '')
         contract.m_expiry = subscribeReq.expiry
         contract.m_strike = subscribeReq.strikePrice
         contract.m_right = optionTypeMap.get(subscribeReq.optionType, '')
-        
-        # 考虑设计为针对期货用代码_到期日的方式来代替单纯的代码
-        if contract.m_secType == 'FUT' and not subscribeReq.expiry:
-            # 期货 如果没有设置过期时间, 默认设置为下个月
-            dt_obj = datetime.now()
-            days = calendar.monthrange(dt_obj.year, dt_obj.month)[1]
-            nextMonth = dt_obj + timedelta(days=(days - dt_obj.day + 1))
-            contract.m_expiry = nextMonth.strftime('%Y%m')
 
+        # 外汇和期货采用localSymbol请求
+        if contract.m_secType == 'FUT' or contract.m_secType == 'CASH':
+            contract.m_localSymbol = str(subscribeReq.symbol)
+            contract.m_symbol = ''
+
+        else:
+            contract.m_symbol = str(subscribeReq.symbol)
+
+        # 获取行情数据
         self.connection.reqMktData(self.tickerId, contract, '', False)
         
         # 获取合约详细信息
@@ -231,7 +232,7 @@ class IbGateway(VtGateway):
         
         # 创建合约对象
         contract = Contract()
-        contract.m_symbol = str(orderReq.symbol)
+
         contract.m_exchange = exchangeMap.get(orderReq.exchange, '')
         contract.m_secType = productClassMap.get(orderReq.productClass, '')
         contract.m_currency = currencyMap.get(orderReq.currency, '')
@@ -239,7 +240,14 @@ class IbGateway(VtGateway):
         contract.m_expiry = orderReq.expiry
         contract.m_strike = orderReq.strikePrice
         contract.m_right = optionTypeMap.get(orderReq.optionType, '')
-        
+
+        # 外汇和期货采用localSymbol请求
+        if contract.m_secType == 'FUT' or contract.m_secType == 'CASH':
+            contract.m_localSymbol = str(orderReq.symbol)
+            contract.m_symbol = ''
+        else:
+            contract.m_symbol = str(orderReq.symbol)
+
         # 创建委托对象
         order = Order()
         order.m_orderId = self.orderId
@@ -329,6 +337,9 @@ class IbWrapper(EWrapper):
     #----------------------------------------------------------------------
     def tickSize(self, tickerId, field, size):
         """行情推送（量相关）"""
+        pass
+        """
+        # 太耗资源了, 也没有必要, 暂时注释掉
         if field in tickFieldMap:
             tick = self.tickDict[tickerId]
             key = tickFieldMap[field]
@@ -349,6 +360,7 @@ class IbWrapper(EWrapper):
             self.gateway.onTick(newtick)      
         else:
             print field
+        """
 
     #----------------------------------------------------------------------
     def tickOptionComputation(self, tickerId, field, impliedVol, delta, optPrice, pvDividend, gamma, vega, theta, undPrice):
@@ -411,7 +423,9 @@ class IbWrapper(EWrapper):
             od = VtOrderData()  # od代表orderData
             od.orderID = orderId
             od.vtOrderID = '.'.join([self.gatewayName, orderId])
-            od.symbol = contract.m_symbol
+
+            od.symbol = contract.m_localSymbol
+
             od.exchange = exchangeMapReverse.get(contract.m_exchange, '')
             od.vtSymbol = '.'.join([od.symbol, od.exchange])  
             od.gatewayName = self.gatewayName
@@ -453,8 +467,9 @@ class IbWrapper(EWrapper):
     def updatePortfolio(self, contract, position, marketPrice, marketValue, averageCost, unrealizedPNL, realizedPNL, accountName):
         """持仓更新推送"""
         pos = VtPositionData()
-        
-        pos.symbol = contract.m_symbol
+
+        pos.symbol = contract.m_localSymbol
+
         pos.exchange = exchangeMapReverse.get(contract.m_exchange, contract.m_exchange)
         pos.vtSymbol = '.'.join([pos.symbol, pos.exchange])
         pos.direction = DIRECTION_NET
@@ -488,10 +503,10 @@ class IbWrapper(EWrapper):
         """合约查询回报"""
         contract = VtContractData()
         contract.gatewayName = self.gatewayName
-        contract.symbol = contractDetails.m_summary.m_symbol
+        contract.symbol = contractDetails.m_summary.m_localSymbol
         contract.exchange = contractDetails.m_summary.m_exchange
 
-        contract.vtSymbol = '.'.join([contract.symbol, contract.exchange])
+        contract.vtSymbol = '.'.join([contractDetails.m_summary.m_localSymbol, contract.exchange])
         contract.name = contractDetails.m_summary.m_localSymbol.decode('UTF-8')
         contract.currency = contractDetails.m_summary.m_currency
 
@@ -520,8 +535,9 @@ class IbWrapper(EWrapper):
         trade.gatewayName = self.gatewayName     
         trade.tradeID = execution.m_execId
         trade.vtTradeID = '.'.join([self.gatewayName, trade.tradeID])
-        
-        trade.symbol = contract.m_symbol
+
+        trade.symbol = contract.m_localSymbol
+
         trade.exchange = exchangeMapReverse.get(contract.m_exchange, '')
         trade.vtSymbol = '.'.join([trade.symbol, trade.exchange])  
         

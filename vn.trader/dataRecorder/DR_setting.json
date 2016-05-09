@@ -1,15 +1,24 @@
 {
     "working": true,
 
+    "tick":
+    [
+        ["SPY", "IB", "SMART", "USD", "股票"],
+        ["CLM6", "IB", "NYMEX", "USD", "期货"],
+        ["EUR.USD", "IB", "IDEALPRO", "USD", "外汇"]
+     ],
+
     "bar":
     [
-        ["EUR", "IB", "IDEALPRO", "USD", "外汇"],
-        ["SPY", "IB", "SMART", "USD", "股票"]
+        ["SPY", "IB", "SMART", "USD", "股票"],
+        ["CLM6", "IB", "NYMEX", "USD", "期货"],
+        ["EUR.USD", "IB", "IDEALPRO", "USD", "外汇"]
      ],
 
     "active":
     {
-        "EUR": "EUR",
-        "SPY": "SPY"
+        "SPY"   : "SPY",
+        "CL00"  : "CLM6",
+        "EUR.USD": "EUR.USD"
     }
 }

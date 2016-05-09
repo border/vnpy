@@ -287,6 +287,9 @@ class CtaEngine(object):
         try:
             name = setting['name']
             className = setting['className']
+            exchange = ''
+            if 'exchange' in setting:
+                exchange = setting['exchange']
         except Exception, e:
             self.writeCtaLog(u'载入策略出错：%s' %e)
             return
@@ -304,17 +307,23 @@ class CtaEngine(object):
             # 创建策略实例
             strategy = strategyClass(self, setting)  
             self.strategyDict[name] = strategy
-            
+
+            # 订阅合约
+            if exchange:
+                ctaVtSymbol = '.'.join([strategy.vtSymbol, exchange])
+            else:
+                ctaVtSymbol = strategy.vtSymbol
+
             # 保存Tick映射关系
-            if strategy.vtSymbol in self.tickStrategyDict:
-                l = self.tickStrategyDict[strategy.vtSymbol]
+            if ctaVtSymbol in self.tickStrategyDict:
+                l = self.tickStrategyDict[ctaVtSymbol]
             else:
                 l = []
-                self.tickStrategyDict[strategy.vtSymbol] = l
+                self.tickStrategyDict[ctaVtSymbol] = l
             l.append(strategy)
-            
-            # 订阅合约
-            contract = self.mainEngine.getContract(strategy.vtSymbol)
+
+            contract = self.mainEngine.getContract(ctaVtSymbol)
+
             if contract:
                 req = VtSubscribeReq()
                 req.symbol = contract.symbol

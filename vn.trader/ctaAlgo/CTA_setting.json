@@ -2,6 +2,7 @@
     {
         "name": "double ema",
         "className": "DoubleEmaDemo",
-        "vtSymbol": "EUR.IDEALPRO"
+        "vtSymbol": "EUR.USD",
+        "exchange": "IDEALPRO"
     }
 ]
