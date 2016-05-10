@@ -619,6 +619,7 @@ class TradingWidget(QtGui.QFrame):
     signal = QtCore.pyqtSignal(type(Event()))
     
     directionList = [DIRECTION_LONG,
+                     DIRECTION_SELL,
                      DIRECTION_SHORT]
 
     offsetList = [OFFSET_OPEN,
