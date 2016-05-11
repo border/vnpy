@@ -178,7 +178,11 @@ class IbGateway(VtGateway):
         # 请求账户数据主推更新
         self.connection.reqAccountUpdates(True, '')
 
+        # 订阅仓位信息
         self.connection.reqPositions()
+
+        # 订阅订单信息
+        self.connection.reqAllOpenOrders()
 
 
     #----------------------------------------------------------------------
