@@ -65,7 +65,10 @@ class CtaEngine(object):
         req = VtOrderReq()
         req.symbol = contract.symbol
         req.exchange = contract.exchange
-        req.price = price
+        req.productClass = contract.productClass
+        req.currency = contract.currency
+
+        req.price = round(price, 4)
         req.volume = volume
         
         # 设计为CTA引擎发出的委托只允许使用限价单
@@ -84,10 +87,12 @@ class CtaEngine(object):
         elif orderType == CTAORDER_COVER:
             req.direction = DIRECTION_LONG
             req.offset = OFFSET_CLOSE
-        
+
         vtOrderID = self.mainEngine.sendOrder(req, contract.gatewayName)    # 发单
         self.orderStrategyDict[vtOrderID] = strategy        # 保存vtOrderID和策略的映射关系
-        
+
+        self.writeCtaLog(u'发送委托：' + vtSymbol + " " + req.direction + " " + str(volume) + "@" + str(req.price) + " " + strategy.className)
+
         #self.writeCtaLog(u'发送委托：' + str(req.__dict__))
         
         return vtOrderID

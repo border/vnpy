@@ -37,11 +37,12 @@ priceTypeMapReverse = {v: k for k, v in priceTypeMap.items()}
 # 方向类型映射
 directionMap = {}
 directionMap[DIRECTION_LONG] = 'BUY'
-directionMap[DIRECTION_SHORT] = 'SSHORT'
+#directionMap[DIRECTION_SHORT] = 'SSHORT'
+directionMap[DIRECTION_SHORT] = 'SELL'
 directionMap[DIRECTION_SELL] = 'SELL'
 directionMapReverse = {v: k for k, v in directionMap.items()}
 directionMapReverse['BOT'] = DIRECTION_LONG
-directionMapReverse['SLD'] = DIRECTION_SHORT
+directionMapReverse['SLD'] = DIRECTION_SELL
 
 # 交易所类型映射
 exchangeMap = {}
@@ -254,7 +255,7 @@ class IbGateway(VtGateway):
         order.m_lmtPrice = orderReq.price
         order.m_totalQuantity = orderReq.volume
         order.m_orderType = priceTypeMap.get(orderReq.priceType, '')
-        
+
         # 发送委托
         self.connection.placeOrder(self.orderId, contract, order)
         
