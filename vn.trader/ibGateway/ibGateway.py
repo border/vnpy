@@ -132,6 +132,9 @@ class IbGateway(VtGateway):
         self.wrapper = IbWrapper(self)                  # 回调接口
         self.connection = EClientSocket(self.wrapper)   # 主动接口
 
+        if not self.connected:
+            self.connect()
+
     #----------------------------------------------------------------------
     def connect(self):
         """连接"""
@@ -176,9 +179,6 @@ class IbGateway(VtGateway):
         # 订阅行情
         self.tickerId += 1
 
-        if not self.connected:
-            self.connect()
-
         contract = Contract()
 
         contract.m_exchange = exchangeMap.get(subscribeReq.exchange, '')
@@ -188,13 +188,9 @@ class IbGateway(VtGateway):
         contract.m_strike = subscribeReq.strikePrice
         contract.m_right = optionTypeMap.get(subscribeReq.optionType, '')
 
-        # 外汇和期货采用localSymbol请求
-        if contract.m_secType == 'FUT' or contract.m_secType == 'CASH':
-            contract.m_localSymbol = str(subscribeReq.symbol)
-            contract.m_symbol = ''
-
-        else:
-            contract.m_symbol = str(subscribeReq.symbol)
+        # 采用localSymbol请求
+        contract.m_localSymbol = str(subscribeReq.symbol)
+        contract.m_symbol = ''
 
         # 获取行情数据
         self.connection.reqMktData(self.tickerId, contract, '', False)
@@ -230,12 +226,9 @@ class IbGateway(VtGateway):
         contract.m_strike = orderReq.strikePrice
         contract.m_right = optionTypeMap.get(orderReq.optionType, '')
 
-        # 外汇和期货采用localSymbol请求
-        if contract.m_secType == 'FUT' or contract.m_secType == 'CASH':
-            contract.m_localSymbol = str(orderReq.symbol)
-            contract.m_symbol = ''
-        else:
-            contract.m_symbol = str(orderReq.symbol)
+        # 采用localSymbol请求
+        contract.m_localSymbol = str(orderReq.symbol)
+        contract.m_symbol = ''
 
         # 创建委托对象
         order = Order()
