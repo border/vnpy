@@ -93,6 +93,8 @@ class CtaEngine(object):
 
         self.writeCtaLog(u'发送委托：' + vtSymbol + " " + req.direction + " " + str(volume) + "@" + str(req.price) + " " + strategy.className)
 
+        print u'发送委托：' + vtSymbol + " " + req.direction + " " + str(volume) + "@" + str(req.price) + " " + strategy.className
+
         #self.writeCtaLog(u'发送委托：' + str(req.__dict__))
         
         return vtOrderID

@@ -1,17 +1,13 @@
 {
-    "working": true,
+    "working": false,
 
     "bar":
     [
-        ["SPY", "IB", "SMART", "USD", "股票"],
-        ["CLM6", "IB", "NYMEX", "USD", "期货"],
         ["EUR.USD", "IB", "IDEALPRO", "USD", "外汇"]
      ],
 
     "active":
     {
-        "SPY"   : "SPY",
-        "CL00"  : "CLM6",
         "EUR.USD": "EUR.USD"
     }
 }

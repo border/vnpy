@@ -306,6 +306,8 @@ class IbWrapper(EWrapper):
         self.tickDict = gateway.tickDict            # tick快照字典，key为tickerId，value为VtTickData对象
         self.orderDict = gateway.orderDict          # order字典
         self.accountDict = gateway.accountDict      # account字典
+
+        self.ndigits = 5    # 价格默认小数点位数
        
     #----------------------------------------------------------------------
     def tickPrice(self, tickerId, field, price, canAutoExecute):
@@ -313,6 +315,7 @@ class IbWrapper(EWrapper):
         if field in tickFieldMap:
             tick = self.tickDict[tickerId]
             key = tickFieldMap[field]
+            price = round(price, self.ndigits)
             tick.__setattr__(key, price)
                         
             # 外汇单独设置时间, tickString 没有返回外汇时间
@@ -323,6 +326,7 @@ class IbWrapper(EWrapper):
                 # IB 外汇没有 lastPrice 采用 ask和bid的中间值
                 if tick.askPrice1 and tick.bidPrice1:
                     tick.lastPrice = (tick.askPrice1 + tick.bidPrice1) / 2
+                    tick.lastPrice = round(tick.lastPrice, self.ndigits)
                 else:
                     return
             
@@ -348,6 +352,7 @@ class IbWrapper(EWrapper):
                 # IB 外汇没有 lastPrice 采用 ask和bid的中间值
                 if tick.askPrice1 and tick.bidPrice1:
                     tick.lastPrice = (tick.askPrice1 + tick.bidPrice1) / 2
+                    tick.lastPrice = round(tick.lastPrice, self.ndigits)
                 else:
                     return
             # 行情数据更新
