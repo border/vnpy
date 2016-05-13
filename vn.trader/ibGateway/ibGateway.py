@@ -37,7 +37,7 @@ priceTypeMapReverse = {v: k for k, v in priceTypeMap.items()}
 # 方向类型映射
 directionMap = {}
 directionMap[DIRECTION_LONG] = 'BUY'
-#directionMap[DIRECTION_SHORT] = 'SSHORT'
+#directionMap[DIRECTION_SHORT] = 'SSHORT'   // IB 金融机构专用 SELL SHORT
 directionMap[DIRECTION_SHORT] = 'SELL'
 directionMap[DIRECTION_SELL] = 'SELL'
 directionMapReverse = {v: k for k, v in directionMap.items()}
@@ -261,6 +261,10 @@ class IbGateway(VtGateway):
         
         # 查询下一个有效编号
         self.connection.reqIds(1)
+
+        # 返回订单号（字符串），便于某些算法进行动态管理
+        vtOrderID = '.'.join([self.gatewayName, str(self.orderId)])
+        return vtOrderID
     
     #----------------------------------------------------------------------
     def cancelOrder(self, cancelOrderReq):
