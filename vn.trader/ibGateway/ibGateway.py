@@ -452,9 +452,18 @@ class IbWrapper(EWrapper):
         pos = VtPositionData()
 
         pos.symbol = contract.m_localSymbol
-        pos.exchange = exchangeMapReverse.get(contract.m_exchange, contract.m_exchange)
+        pos.currency = contract.m_currency
+        pos.exchange = exchangeMapReverse.get(contract.m_primaryExch, contract.m_primaryExch)
+        pos.product = productClassMapReverse.get(contract.m_secType, contract.m_secType)
         pos.vtSymbol = '.'.join([pos.symbol, pos.exchange])
-        pos.direction = DIRECTION_NET
+
+        if position > 0:
+            pos.direction = DIRECTION_LONG
+        elif position < 0:
+            pos.direction = DIRECTION_SHORT
+        else:
+            pos.direction = DIRECTION_NONE
+
         pos.position = position
         pos.price = averageCost
         pos.vtPositionName = pos.vtSymbol

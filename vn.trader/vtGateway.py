@@ -284,7 +284,9 @@ class VtPositionData(VtBaseData):
         # 代码编号相关
         self.symbol = EMPTY_STRING              # 合约代码
         self.exchange = EMPTY_STRING            # 交易所代码
-        self.vtSymbol = EMPTY_STRING            # 合约在vt系统中的唯一代码，合约代码.交易所代码  
+        self.vtSymbol = EMPTY_STRING            # 合约在vt系统中的唯一代码，合约代码.交易所代码
+        self.currency = EMPTY_STRING            # 合约货币
+        self.product = EMPTY_STRING             # 产品类型
         
         # 持仓相关
         self.direction = EMPTY_STRING           # 持仓方向
@@ -423,6 +425,7 @@ class VtCancelOrderReq(object):
         """Constructor"""
         self.symbol = EMPTY_STRING              # 代码
         self.exchange = EMPTY_STRING            # 交易所
+        self.currency = EMPTY_STRING            # 合约货币
         
         # 以下字段主要和CTP、LTS类接口相关
         self.orderID = EMPTY_STRING             # 报单号

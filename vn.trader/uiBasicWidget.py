@@ -1032,18 +1032,26 @@ class TradingWidget(QtGui.QFrame):
         
         # 更新交易组件的显示合约
         self.lineSymbol.setText(symbol)
-        self.updateSymbol()
         
         # 自动填写信息
         self.comboPriceType.setCurrentIndex(self.priceTypeList.index(PRICETYPE_LIMITPRICE))
         self.comboOffset.setCurrentIndex(self.offsetList.index(OFFSET_CLOSE))
-        self.spinVolume.setValue(pos.position)
+        self.spinVolume.setValue(abs(pos.position))
+
+        self.comboExchange.setCurrentIndex(self.exchangeList.index(pos.exchange))
+
+        self.comboCurrency.setCurrentIndex(self.currencyList.index(pos.currency))
+
+        self.comboProductClass.setCurrentIndex(self.productClassList.index(pos.product))
+
+        self.comboGateway.setCurrentIndex(self.gatewayList.index(pos.gatewayName))
 
         if pos.direction == DIRECTION_LONG or pos.direction == DIRECTION_NET:
             self.comboDirection.setCurrentIndex(self.directionList.index(DIRECTION_SHORT))
         else:
             self.comboDirection.setCurrentIndex(self.directionList.index(DIRECTION_LONG))
 
+        self.updateSymbol()
         # 价格留待更新后由用户输入，防止有误操作
 
 

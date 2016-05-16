@@ -110,6 +110,7 @@ class CtaEngine(object):
                 req = VtCancelOrderReq()
                 req.symbol = order.symbol
                 req.exchange = order.exchange
+                req.currency = order.currency
                 req.frontID = order.frontID
                 req.sessionID = order.sessionID
                 req.orderID = order.orderID
