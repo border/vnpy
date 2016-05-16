@@ -166,6 +166,7 @@ class VtTickData(VtBaseData):
         self.symbol = EMPTY_STRING              # 合约代码
         self.exchange = EMPTY_STRING            # 交易所代码
         self.vtSymbol = EMPTY_STRING            # 合约在vt系统中的唯一代码，通常是 合约代码.交易所代码
+        self.currency = EMPTY_STRING            # 货币
         
         # 成交数据
         self.lastPrice = EMPTY_FLOAT            # 最新成交价
@@ -359,6 +360,7 @@ class VtContractData(VtBaseData):
         self.exchange = EMPTY_STRING            # 交易所代码
         self.vtSymbol = EMPTY_STRING            # 合约在vt系统中的唯一代码，通常是 合约代码.交易所代码
         self.name = EMPTY_UNICODE               # 合约中文名
+        self.currency = EMPTY_STRING            # 货币
         
         self.productClass = EMPTY_UNICODE       # 合约类型
         self.size = EMPTY_INT                   # 合约大小

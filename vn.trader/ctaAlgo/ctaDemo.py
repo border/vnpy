@@ -21,7 +21,10 @@ class DoubleEmaDemo(CtaTemplate):
     """双指数均线策略Demo"""
     className = 'DoubleEmaDemo'
     author = u'用Python的交易员'
-    
+
+    # 仓位
+    pre_pos = 20000
+
     # 策略参数
     fastK = 0.9     # 快速EMA参数
     slowK = 0.1     # 慢速EMA参数
@@ -89,6 +92,8 @@ class DoubleEmaDemo(CtaTemplate):
         """收到行情TICK推送（必须由用户继承实现）"""
         # 计算K线
         tickMinute = tick.datetime.minute
+
+        tick.lastPrice = round(tick.lastPrice, 5)
         
         if tickMinute != self.barMinute:    
             if self.bar:
@@ -145,24 +150,26 @@ class DoubleEmaDemo(CtaTemplate):
         # 判断买卖
         crossOver = self.fastMa0>self.slowMa0 and self.fastMa1<self.slowMa1     # 金叉上穿
         crossBelow = self.fastMa0<self.slowMa0 and self.fastMa1>self.slowMa1    # 死叉下穿
-        
+
+        print u'crossOver: %s, crossBelow: %s' % (str(crossOver), str(crossBelow))
+
         # 金叉和死叉的条件是互斥
         # 所有的委托均以K线收盘价委托（这里有一个实盘中无法成交的风险，考虑添加对模拟市价单类型的支持）
         if crossOver:
             # 如果金叉时手头没有持仓，则直接做多
             if self.pos == 0:
-                self.buy(bar.close, 1)
+                self.buy(bar.close, self.pre_pos)
             # 如果有空头持仓，则先平空，再做多
             elif self.pos < 0:
-                self.cover(bar.close, 1)
-                self.buy(bar.close, 1)
+                self.cover(bar.close, self.pre_pos)
+                self.buy(bar.close, self.pre_pos)
         # 死叉和金叉相反
         elif crossBelow:
             if self.pos == 0:
-                self.short(bar.close, 1)
+                self.short(bar.close, self.pre_pos)
             elif self.pos > 0:
-                self.sell(bar.close, 1)
-                self.short(bar.close, 1)
+                self.sell(bar.close, self.pre_pos)
+                self.short(bar.close, self.pre_pos)
                 
         # 发出状态更新事件
         self.putEvent()

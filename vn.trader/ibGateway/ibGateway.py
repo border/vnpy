@@ -203,6 +203,7 @@ class IbGateway(VtGateway):
         ct.symbol = str(subscribeReq.symbol)
         ct.exchange = subscribeReq.exchange
         ct.vtSymbol = '.'.join([ct.symbol, ct.exchange])
+        ct.currency = subscribeReq.currency
         ct.productClass = subscribeReq.productClass
         self.contractDict[ct.vtSymbol] = ct
         
@@ -214,9 +215,10 @@ class IbGateway(VtGateway):
         tick = VtTickData()
         tick.symbol = subscribeReq.symbol
         tick.exchange = subscribeReq.exchange
+        tick.currency = subscribeReq.currency
         tick.vtSymbol = '.'.join([tick.symbol, tick.exchange])
         tick.gatewayName = self.gatewayName
-        self.tickDict[self.tickerId] = tick   
+        self.tickDict[self.tickerId] = tick
         self.tickProductDict[self.tickerId] = subscribeReq.productClass
 
     #----------------------------------------------------------------------
@@ -336,9 +338,10 @@ class IbWrapper(EWrapper):
             tick.time = dt.strftime('%H:%M:%S.%f')
             tick.date = dt.strftime('%Y%m%d')
                 
-            # 行情数据更新
-            newtick = copy(tick)
-            self.gateway.onTick(newtick)      
+            # 行情数据更新, 外汇数据更新频繁, 导致系统卡顿严重
+            if self.tickProductDict[tickerId] != PRODUCT_FOREX:
+                newtick = copy(tick)
+                self.gateway.onTick(newtick)
         else:
             print field
 

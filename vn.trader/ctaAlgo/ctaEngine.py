@@ -65,11 +65,11 @@ class CtaEngine(object):
         req = VtOrderReq()
         req.symbol = contract.symbol
         req.exchange = contract.exchange
-        req.price = price
+        req.price = round(price, 4)
         req.volume = volume
         
-        req.productClass = strategy.productClass
-        req.currency = strategy.currency        
+        req.productClass = contract.productClass
+        req.currency = contract.currency
         
         # 设计为CTA引擎发出的委托只允许使用限价单
         req.priceType = PRICETYPE_LIMITPRICE    
@@ -92,7 +92,7 @@ class CtaEngine(object):
         self.orderStrategyDict[vtOrderID] = strategy        # 保存vtOrderID和策略的映射关系
 
         self.writeCtaLog(u'策略%s发送委托，%s，%s，%s@%s' 
-                         %(strategy.name, vtSymbol, req.direction, volume, price))
+                         %(strategy.name, vtSymbol, req.direction, volume, req.price))
         
         return vtOrderID
     
@@ -291,6 +291,9 @@ class CtaEngine(object):
         try:
             name = setting['name']
             className = setting['className']
+            exchange = ''
+            if 'exchange' in setting:
+                exchange = setting['exchange']
         except Exception, e:
             self.writeCtaLog(u'载入策略出错：%s' %e)
             return
@@ -308,26 +311,31 @@ class CtaEngine(object):
             # 创建策略实例
             strategy = strategyClass(self, setting)  
             self.strategyDict[name] = strategy
-            
+
+            # 订阅合约
+            ctaVtSymbol = strategy.vtSymbol
+            if exchange:
+                ctaVtSymbol = '.'.join([strategy.vtSymbol, exchange])
+
             # 保存Tick映射关系
-            if strategy.vtSymbol in self.tickStrategyDict:
-                l = self.tickStrategyDict[strategy.vtSymbol]
+            if ctaVtSymbol in self.tickStrategyDict:
+                l = self.tickStrategyDict[ctaVtSymbol]
             else:
                 l = []
-                self.tickStrategyDict[strategy.vtSymbol] = l
+                self.tickStrategyDict[ctaVtSymbol] = l
             l.append(strategy)
             
             # 订阅合约
-            contract = self.mainEngine.getContract(strategy.vtSymbol)
+            contract = self.mainEngine.getContract(ctaVtSymbol)
             if contract:
                 req = VtSubscribeReq()
                 req.symbol = contract.symbol
                 req.exchange = contract.exchange
-                
+
                 # 对于IB接口订阅行情时所需的货币和产品类型，从策略属性中获取
-                req.currency = strategy.currency
-                req.productClass = strategy.productClass
-                
+                req.currency = contract.currency
+                req.productClass = contract.productClass
+
                 self.mainEngine.subscribe(req, contract.gatewayName)
             else:
                 self.writeCtaLog(u'%s的交易合约%s无法找到' %(name, strategy.vtSymbol))
