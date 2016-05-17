@@ -91,7 +91,7 @@ class DoubleEmaDemo(CtaTemplate):
     def onTick(self, tick):
         """收到行情TICK推送（必须由用户继承实现）"""
 
-        # self.insertTick(tick)
+        #self.insertTick(tick)
 
         # 计算K线
         tickMinute = tick.datetime.minute
@@ -134,7 +134,7 @@ class DoubleEmaDemo(CtaTemplate):
     def onBar(self, bar):
         """收到Bar推送（必须由用户继承实现）"""
 
-        # self.insertBar(bar)
+        self.insertBar(bar)
 
         # 计算快慢均线
         if not self.fastMa0:        
@@ -157,9 +157,8 @@ class DoubleEmaDemo(CtaTemplate):
         crossOver = self.fastMa0>self.slowMa0 and self.fastMa1<self.slowMa1     # 金叉上穿
         crossBelow = self.fastMa0<self.slowMa0 and self.fastMa1>self.slowMa1    # 死叉下穿
 
-        print u'crossOver: %s, crossBelow: %s' % (str(crossOver), str(crossBelow))
-
         """
+        print u'crossOver: %s, crossBelow: %s' % (str(crossOver), str(crossBelow))
         if self.fastMa0>self.slowMa0:
             self.buy(bar.close, self.pre_pos)
         else:

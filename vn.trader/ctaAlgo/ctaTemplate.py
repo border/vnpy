@@ -22,7 +22,8 @@ class CtaTemplate(object):
     
     # 策略的基本参数
     name = EMPTY_UNICODE           # 策略实例名称
-    vtSymbol = EMPTY_STRING        # 交易的合约vt系统代码    
+    vtSymbol = EMPTY_STRING        # 交易的合约vt系统代码
+    ctaVtSymbolDB = EMPTY_STRING     # 交易的合约vt系统代码, 用于数据库保存
     productClass = EMPTY_STRING    # 产品类型（只有IB接口需要）
     currency = EMPTY_STRING        # 货币（只有IB接口需要）
     
@@ -133,22 +134,22 @@ class CtaTemplate(object):
     #----------------------------------------------------------------------
     def insertTick(self, tick):
         """向数据库中插入tick数据"""
-        self.ctaEngine.insertData(self.tickDbName, self.vtSymbol, tick)
+        self.ctaEngine.insertData(self.tickDbName, self.ctaVtSymbolDB, tick)
     
     #----------------------------------------------------------------------
     def insertBar(self, bar):
         """向数据库中插入bar数据"""
-        self.ctaEngine.insertData(self.barDbName, self.vtSymbol, bar)
+        self.ctaEngine.insertData(self.barDbName, self.ctaVtSymbolDB, bar)
         
     #----------------------------------------------------------------------
     def loadTick(self, days):
         """读取tick数据"""
-        return self.ctaEngine.loadTick(self.tickDbName, self.vtSymbol, days)
+        return self.ctaEngine.loadTick(self.tickDbName, self.ctaVtSymbolDB, days)
     
     #----------------------------------------------------------------------
     def loadBar(self, days):
         """读取bar数据"""
-        return self.ctaEngine.loadBar(self.barDbName, self.vtSymbol, days)
+        return self.ctaEngine.loadBar(self.barDbName, self.ctaVtSymbolDB, days)
     
     #----------------------------------------------------------------------
     def writeCtaLog(self, content):

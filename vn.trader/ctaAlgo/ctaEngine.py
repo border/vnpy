@@ -318,6 +318,7 @@ class CtaEngine(object):
             if exchange:
                 ctaVtSymbol = '.'.join([strategy.vtSymbol, exchange])
 
+            strategy.ctaVtSymbolDB = ctaVtSymbol
             # 保存Tick映射关系
             if ctaVtSymbol in self.tickStrategyDict:
                 l = self.tickStrategyDict[ctaVtSymbol]
