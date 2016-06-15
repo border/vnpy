@@ -259,7 +259,9 @@ class CtaEngine(object):
     def processOrderEvent(self, event):
         """处理委托推送"""
         order = event.dict_['data']
-        
+
+        print "processOrderEvent", order.vtOrderID
+
         if order.vtOrderID in self.orderStrategyDict:
             strategy = self.orderStrategyDict[order.vtOrderID]            
             strategy.onOrder(order)
@@ -268,16 +270,20 @@ class CtaEngine(object):
     def processTradeEvent(self, event):
         """处理成交推送"""
         trade = event.dict_['data']
-        
-        if trade.vtOrderID in self.orderStrategyDict:
-            strategy = self.orderStrategyDict[trade.vtOrderID]
+
+        print "processTradeEvent", trade.vtTradeID, trade.direction
+
+        if trade.vtTradeID in self.orderStrategyDict:
+            strategy = self.orderStrategyDict[trade.vtTradeID]
             
             # 计算策略持仓
             if trade.direction == DIRECTION_LONG:
                 strategy.pos += trade.volume
             else:
                 strategy.pos -= trade.volume
-            
+
+            print "strategy.pos", strategy.pos
+
             strategy.onTrade(trade)
             
         # 更新持仓缓存数据

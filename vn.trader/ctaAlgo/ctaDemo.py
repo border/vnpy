@@ -157,13 +157,13 @@ class DoubleEmaDemo(CtaTemplate):
         crossOver = self.fastMa0>self.slowMa0 and self.fastMa1<self.slowMa1     # 金叉上穿
         crossBelow = self.fastMa0<self.slowMa0 and self.fastMa1>self.slowMa1    # 死叉下穿
 
-        """
+
         print u'crossOver: %s, crossBelow: %s' % (str(crossOver), str(crossBelow))
         if self.fastMa0>self.slowMa0:
             self.buy(bar.close, self.pre_pos)
         else:
             self.short(bar.close, self.pre_pos)
-        """
+
 
         # 金叉和死叉的条件是互斥
         # 所有的委托均以K线收盘价委托（这里有一个实盘中无法成交的风险，考虑添加对模拟市价单类型的支持）
@@ -190,12 +190,16 @@ class DoubleEmaDemo(CtaTemplate):
     def onOrder(self, order):
         """收到委托变化推送（必须由用户继承实现）"""
         # 对于无需做细粒度委托控制的策略，可以忽略onOrder
+        print "onOrder"
         pass
     
     #----------------------------------------------------------------------
     def onTrade(self, trade):
         """收到成交推送（必须由用户继承实现）"""
         # 对于无需做细粒度委托控制的策略，可以忽略onOrder
+        print "onTrade"
+        # 发出状态更新事件
+        self.putEvent()
         pass
     
     

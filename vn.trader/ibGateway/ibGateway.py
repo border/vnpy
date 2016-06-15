@@ -401,7 +401,7 @@ class IbWrapper(EWrapper):
     def openOrder(self, orderId, contract, order, orderState):
         """报单信息推送"""
         orderId = str(orderId)  # orderId是整数
-        
+        print "ibGateWay openOrder"
         if orderId in self.orderDict:
             od = self.orderDict[orderId]
         else:
@@ -424,6 +424,7 @@ class IbWrapper(EWrapper):
     #----------------------------------------------------------------------
     def openOrderEnd(self):
         """ generated source for method openOrderEnd """
+        print "ibGateWay openOrderEnd"
         pass
 
     #----------------------------------------------------------------------
@@ -520,11 +521,11 @@ class IbWrapper(EWrapper):
     #----------------------------------------------------------------------
     def execDetails(self, reqId, contract, execution):
         """成交推送"""
+        print "ibGateWay execDetails onTrade"
         trade = VtTradeData()
         trade.gatewayName = self.gatewayName     
         trade.tradeID = execution.m_execId
-        trade.vtTradeID = '.'.join([self.gatewayName, trade.tradeID])
-        
+
         trade.symbol = contract.m_localSymbol
         trade.exchange = exchangeMapReverse.get(contract.m_exchange, '')
         trade.vtSymbol = '.'.join([trade.symbol, trade.exchange])  
@@ -533,8 +534,10 @@ class IbWrapper(EWrapper):
         trade.direction = directionMapReverse.get(execution.m_side, '')
         trade.price = execution.m_price
         trade.volume = execution.m_shares
-        trade.tradeTime = execution.m_time  
-        
+        trade.tradeTime = execution.m_time
+
+        trade.vtTradeID = '.'.join([self.gatewayName, trade.orderID])
+
         self.gateway.onTrade(trade)
 
     #----------------------------------------------------------------------
