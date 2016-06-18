@@ -10,7 +10,9 @@
 
 from ctaTemplate import DataRecorder
 from ctaDemo import DoubleEmaDemo
+from strategyDoubleEma import DoubleEmaStrategy
 
 STRATEGY_CLASS = {}
 STRATEGY_CLASS['DataRecorder'] = DataRecorder
 STRATEGY_CLASS['DoubleEmaDemo'] = DoubleEmaDemo
+STRATEGY_CLASS['DoubleEmaStrategy'] = DoubleEmaStrategy

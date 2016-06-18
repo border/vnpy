@@ -1,7 +1,7 @@
 [
     {
-        "name": "double ema",
-        "className": "DoubleEmaDemo",
+        "name": "DoubleEmaStrategy",
+        "className": "DoubleEmaStrategy",
         "vtSymbol": "EUR.USD",
         "exchange": "IDEALPRO"
     }

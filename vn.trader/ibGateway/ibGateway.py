@@ -254,7 +254,7 @@ class IbGateway(VtGateway):
         order.m_lmtPrice = orderReq.price
         order.m_totalQuantity = orderReq.volume
         order.m_orderType = priceTypeMap.get(orderReq.priceType, '')
-        
+
         # 发送委托
         self.connection.placeOrder(self.orderId, contract, order)
         
@@ -381,7 +381,7 @@ class IbWrapper(EWrapper):
     def orderStatus(self, orderId, status, filled, remaining, avgFillPrice, permId, parentId, lastFillPrice, clientId, whyHeld):
         """报单成交回报"""
         orderId = str(orderId)
-        
+
         if orderId in self.orderDict:
             od = self.orderDict[orderId]
         else:
@@ -393,7 +393,7 @@ class IbWrapper(EWrapper):
         
         od.status = orderStatusMapReverse.get(status, STATUS_UNKNOWN)
         od.tradedVolume = filled
-        
+
         newod = copy(od)
         self.gateway.onOrder(newod)
 
@@ -401,7 +401,6 @@ class IbWrapper(EWrapper):
     def openOrder(self, orderId, contract, order, orderState):
         """报单信息推送"""
         orderId = str(orderId)  # orderId是整数
-        print "ibGateWay openOrder"
         if orderId in self.orderDict:
             od = self.orderDict[orderId]
         else:
@@ -410,7 +409,8 @@ class IbWrapper(EWrapper):
             od.vtOrderID = '.'.join([self.gatewayName, orderId])
             od.symbol = contract.m_localSymbol
             od.exchange = exchangeMapReverse.get(contract.m_exchange, '')
-            od.vtSymbol = '.'.join([od.symbol, od.exchange])  
+            od.vtSymbol = '.'.join([od.symbol, od.exchange])
+            od.currency = contract.m_currency
             od.gatewayName = self.gatewayName
             self.orderDict[orderId] = od
         
@@ -424,7 +424,6 @@ class IbWrapper(EWrapper):
     #----------------------------------------------------------------------
     def openOrderEnd(self):
         """ generated source for method openOrderEnd """
-        print "ibGateWay openOrderEnd"
         pass
 
     #----------------------------------------------------------------------

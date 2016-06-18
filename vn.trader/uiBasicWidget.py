@@ -130,7 +130,7 @@ class BidCell(QtGui.QTableWidgetItem):
         
         if text:
             self.setContent(text)
-    
+
     #----------------------------------------------------------------------
     def setContent(self, text):
         """设置内容"""
@@ -152,7 +152,7 @@ class AskCell(QtGui.QTableWidgetItem):
         
         if text:
             self.setContent(text)
-    
+
     #----------------------------------------------------------------------
     def setContent(self, text):
         """设置内容"""
@@ -268,7 +268,6 @@ class BasicMonitor(QtGui.QTableWidget):
         # 如果允许了排序功能，则插入数据前必须关闭，否则插入新的数据会变乱
         if self.sorting:
             self.setSortingEnabled(False)
-        
         # 如果设置了dataKey，则采用存量更新模式
         if self.dataKey:
             key = data.__getattribute__(self.dataKey)
@@ -318,7 +317,7 @@ class BasicMonitor(QtGui.QTableWidget):
                 
         # 调整列宽
         self.resizeColumns()
-        
+
         # 重新打开排序
         if self.sorting:
             self.setSortingEnabled(True)
@@ -710,7 +709,7 @@ class TradingWidget(QtGui.QFrame):
         self.comboOffset.addItems(self.offsetList)
 
         self.spinPrice = QtGui.QDoubleSpinBox()
-        self.spinPrice.setDecimals(4)
+        self.spinPrice.setDecimals(5)
         self.spinPrice.setMinimum(0)
         self.spinPrice.setMaximum(100000)
 
@@ -857,6 +856,12 @@ class TradingWidget(QtGui.QFrame):
         vbox.addStretch()
 
         self.setLayout(vbox)
+
+        # 初始化为默认 IB-外汇
+        self.comboExchange.setCurrentIndex(self.exchangeList.index(EXCHANGE_IDEALPRO))
+        self.comboCurrency.setCurrentIndex(self.currencyList.index(CURRENCY_USD))
+        self.comboProductClass.setCurrentIndex(self.productClassList.index(PRODUCT_FOREX))
+        self.comboGateway.setCurrentIndex(self.gatewayList.index("IB"))
 
         # 关联更新
         buttonSendOrder.clicked.connect(self.sendOrder)
